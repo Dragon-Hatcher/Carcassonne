@@ -1,5 +1,5 @@
-import server.initServer
+import ui.initUI
 
 fun main() {
-    initServer(true)
+    initUI()
 }
