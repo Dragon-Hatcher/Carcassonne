@@ -1,6 +1,7 @@
 package resources
 
 import game.PlayerColor
+import game.TileDeck
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -9,8 +10,9 @@ import javax.imageio.ImageIO
 object Resources {
     val MEEPLES = PlayerColor.values().associateWith { loadImage("meeples/${it.toString().lowercase()}-meeple.png").resize(60, 60) }
 
-    val CARD_BACK = loadImage("tiles/card-back.png")
-    val CARD_BACK_INVERSE = loadImage("tiles/card-back-inverse.png")
+    val TILE_BACK = loadImage("tiles/card-back.png")
+    val TILE_BACK_INVERSE = loadImage("tiles/card-back-inverse.png")
+    val TILES = TileDeck().tiles.associateWith { loadImage("tiles/${it.toFileString()}.png") }
 
     val LOGO = loadImage("logo/logo@32.png")
     val LOGO16 = loadImage("logo/logo@16.png")
