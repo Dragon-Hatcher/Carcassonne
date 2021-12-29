@@ -27,8 +27,9 @@ class ChooseNameScreen: JPanel() {
             nameTF.warningLevel = WarningLevel.ERROR
             nameTF.toolTipText = "Enter a name."
         } else {
-            val player = Player(nameTF.text)
+            val player = Player(client.userId, nameTF.text, null)
             client.sendIConnected(player)
+            carcFrame.setContentPanel(JoinedPlayersScreen())
         }
     }
 }

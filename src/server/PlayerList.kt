@@ -7,4 +7,6 @@ class PlayerList(val players: List<Player>) {
     }
 
     fun toObject() = players.map { it.toObject() }
+
+    fun plus(player: Player) = PlayerList(players.plus(player))
 }
