@@ -44,7 +44,7 @@ data class Tile(
     fun toFileString(): String {
         val sides = north.toFileString() + east.toFileString() + south.toFileString() + west.toFileString()
         var suffix = ""
-        if (connected) suffix += "C"
+        if (!connected) suffix += "C"
         if (pendant) suffix += "P"
         if (monastery) suffix += "M"
         if (suffix.isNotEmpty()) suffix = "-$suffix"
@@ -59,8 +59,8 @@ class TileDeck {
         get() = mutTiles
 
     init {
-        add(Tile(CITY, CITY, ROAD, ROAD, l(l(SE, NW), l(SW))), 3)
-        add(Tile(CITY, CITY, ROAD, ROAD, l(l(SE, NW), l(SW)), pendant = true), 2)
+        add(Tile(CITY, ROAD, ROAD, CITY, l(l(SW, NE), l(SE))), 3)
+        add(Tile(CITY, ROAD, ROAD, CITY, l(l(SW, NE), l(SE)), pendant = true), 2)
         add(Tile(FIELD, CITY, FIELD, CITY, l(l(NE, NW), l(SE, SW))), 1)
         add(Tile(FIELD, CITY, FIELD, CITY, l(l(NE, NW), l(SE, SW)), pendant = true), 2)
         add(Tile(CITY, CITY, CITY, CITY, l(), pendant = true), 1)
