@@ -22,7 +22,14 @@ private val SE = Corners.NE
 private val SW = Corners.NW
 
 enum class Corners {
-    NE, NW, SE, SW
+    NE, NW, SE, SW;
+
+    fun rotated() = when (this) {
+        NE -> SE
+        NW -> NE
+        SE -> SW
+        SW -> NW
+    }
 }
 
 private fun <T> l(vararg items: T) = items.toList()
@@ -50,6 +57,12 @@ data class Tile(
         if (suffix.isNotEmpty()) suffix = "-$suffix"
         return sides + suffix
     }
+
+    fun rotated(): Tile = Tile(
+        west, north, east, south,
+        fieldGroups.map { group -> group.map { it.rotated() } },
+        connected, pendant, monastery
+    )
 }
 
 class TileDeck {

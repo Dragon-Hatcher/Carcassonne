@@ -7,9 +7,10 @@ import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.Point
 import java.awt.event.*
+import java.awt.geom.AffineTransform
 import javax.swing.JPanel
 
-class BoardPanel(private val board: Board): JPanel(), MouseWheelListener, MouseListener, MouseMotionListener {
+class BoardPanel(private val board: Board) : JPanel(), MouseWheelListener, MouseListener, MouseMotionListener {
     private var offsetX = 0
     private var offsetY = 0
     private var scale = 1.0
@@ -25,10 +26,19 @@ class BoardPanel(private val board: Board): JPanel(), MouseWheelListener, MouseL
         g as Graphics2D
 
         for ((pos, tile) in board.tiles) {
+            val oldTransform = g.transform
+
             val size = (Resources.TILE_SIZE * scale).toInt()
             val screenX = offsetX + pos.x * size
             val screenY = offsetY + pos.y * size
-            g.drawImage(Resources.TILES[tile]!!.resize(size, size), screenX, screenY, null)
+            g.transform = AffineTransform.getRotateInstance(
+                pos.rot.radians,
+                screenX.toDouble() + size / 2,
+                screenY.toDouble() + size / 2
+            )
+            g.drawImage(Resources.TILES[tile], screenX, screenY, size, size, null)
+
+            g.transform = oldTransform
         }
     }
 
@@ -57,6 +67,7 @@ class BoardPanel(private val board: Board): JPanel(), MouseWheelListener, MouseL
     override fun mousePressed(e: MouseEvent) {
         mouseStart = e.point
     }
+
     override fun mouseReleased(e: MouseEvent?) {}
     override fun mouseEntered(e: MouseEvent?) {}
     override fun mouseExited(e: MouseEvent?) {}
